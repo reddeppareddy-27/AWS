@@ -91,3 +91,46 @@ def lambda_handler(event, context):
     except Exception as e:
         print(f"Error triggering Glue job: {str(e)}")
         raise e
+
+
+---
+## 5️⃣ Configure S3 Trigger
+
+1. Open the **AWS Lambda Console**.
+2. Select your Lambda function.
+3. Click **Add Trigger**.
+4. Choose **S3** as the trigger source.
+5. Select the bucket: `input-data-bucket`.
+6. Set **Event Type** to: `All object create events`.
+7. Set **Prefix** to: `input_folder/`.
+8. Click **Add**.
+
+This configuration ensures that whenever a new file is uploaded to the specified S3 prefix, the Lambda function is automatically triggered.
+
+---
+
+## 🧪 Testing the Pipeline
+
+### 📤 Step 1: Upload Test File
+Upload a sample CSV file to:`s3://input-data-bucket/input_folder/`
+
+---
+
+### 📊 Step 2: Monitor Lambda Execution
+1. Open **Amazon CloudWatch**.
+2. Navigate to **Logs**.
+3. Select the log group for your Lambda function.
+4. Confirm that the function was triggered successfully.
+
+---
+
+### 🔄 Step 3: Verify Glue Job Execution
+1. Open the **AWS Glue Console**.
+2. Go to **ETL Jobs** → **Job runs**.
+3. Ensure the job run status shows **Succeeded**.
+
+---
+
+### ✅ Step 4: Validate Output
+Check the output bucket:`s3://output-data-bucket/`
+
