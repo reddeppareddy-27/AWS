@@ -65,33 +65,6 @@ The ETL script should:
 - **Runtime:** Python 3.x
 - **Purpose:** Trigger Glue job when a new file is uploaded to S3
 
-```python
-import boto3
-import urllib.parse
-import os
-
-glue = boto3.client('glue')
-
-def lambda_handler(event, context):
-    # Get metadata from the S3 event
-    bucket = event['Records'][0]['s3']['bucket']['name']
-    key = urllib.parse.unquote_plus(event['Records'][0]['s3']['object']['key'])
-    
-    try:
-        # Trigger the Glue Job
-        response = glue.start_job_run(
-            JobName='csv_to_json_etl_job',
-            Arguments={
-                '--SOURCE_BUCKET': bucket,
-                '--SOURCE_KEY': key
-            }
-        )
-        print(f"Triggered Glue Job for file: {key}")
-        return response
-    except Exception as e:
-        print(f"Error triggering Glue job: {str(e)}")
-        raise e
-```
 
 
 ---
