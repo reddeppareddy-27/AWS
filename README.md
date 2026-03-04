@@ -90,7 +90,8 @@ def lambda_handler(event, context):
         return response
     except Exception as e:
         print(f"Error triggering Glue job: {str(e)}")
-        raise e ```
+        raise e
+```
 
 
 ---
